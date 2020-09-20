@@ -20,8 +20,7 @@ public class EfficientWordMarkov extends BaseWordMarkov{
     @Override
     public void setTraining(String text) {
         super.setTraining(text);
-        int index = 0;
-        myWords = text.split(" ");
+        myWords = text.split("\\s+");
 
         for (int i = 0; i < myWords.length - myOrder + 1; i++) {
             WordGram gram = new WordGram(myWords, i, myOrder);
