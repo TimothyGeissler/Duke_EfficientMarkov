@@ -9,30 +9,21 @@ public class EfficientMarkov extends BaseMarkov {
 		this(3);
 	}
 
-	public static void main(String[] args) {
-		EfficientMarkov e = new EfficientMarkov();
-		e.setTraining("bbbabbabbbbaba");
-	}
-
 	public EfficientMarkov(int order) {
 		super(order);
 		myMap = new HashMap<>();
 	}
 
+	/**
+	 * Training method, creates data & populates HashMap myMap. Run once per training dataset
+	 * Adds String key and corresponding ArrayList<String> of following characters until text is finished
+	 * @param text input training text
+	 */
 	@Override
 	public void setTraining(String text) {
 		super.setTraining(text);
 		myMap.clear();
 
-		/*int index = 0;
-		while (index + myOrder <= myText.length()) {
-			String str = myText.substring(index, index + myOrder);
-
-
-
-			myMap.putIfAbsent(str, super.getFollows(str));
-			index++;
-		}*/
 		for (int i = 0; i < text.length() - myOrder + 1; i++) {
 			String str = myText.substring(i, i + myOrder);
 			myMap.putIfAbsent(str, new ArrayList<String>());
@@ -44,12 +35,12 @@ public class EfficientMarkov extends BaseMarkov {
 				myMap.get(str).add(myText.substring(i + myOrder, i + myOrder + 1));
 			}
 		}
-
-		/*myMap.forEach((k, v) -> {
-			System.out.println(k + " = " + v);
-		});*/
 	}
-
+	/**
+	 * O(1) implementation - uses HashMap for instant access of training data
+	 * @param key input String key to find following characters of
+	 * @return Arraylist<String> of all characters following given key String
+	 */
 	@Override
 	public ArrayList<String> getFollows(String key) {
 		if (myMap.containsKey(key)) {

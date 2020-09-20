@@ -12,6 +12,11 @@ public class EfficientWordMarkov extends BaseWordMarkov{
         myMap = new HashMap<>();
     }
 
+    /**
+     * Training method, creates data & populates HashMap myMap. Run once per training dataset
+     * Adds Gram and corresponding ArrayList<String> until text is finished
+     * @param text Given training data
+     */
     @Override
     public void setTraining(String text) {
         super.setTraining(text);
@@ -29,12 +34,13 @@ public class EfficientWordMarkov extends BaseWordMarkov{
                 myMap.get(gram).add(myWords[i + myOrder]);
             }
         }
-
-        /*myMap.forEach((k, v) -> {
-            System.out.println(k + " - " + v);
-        });*/
     }
 
+    /**
+     * O(1) implementation - uses HashMap for instant access of training data
+     * @param kGram input WordGram to find following characters of
+     * @return Arraylist<String> of all characters following given wordgram
+     */
     @Override
     public ArrayList<String> getFollows(WordGram kGram) {
         if (myMap.containsKey(kGram)) {
